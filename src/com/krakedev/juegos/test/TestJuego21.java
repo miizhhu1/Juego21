@@ -1,5 +1,7 @@
 package com.krakedev.juegos.test;
 
+import java.util.ArrayList;
+
 import com.krakedev.juegos.entidades.Jugador;
 import com.krakedev.juegos.servicios.Juego21;
 
@@ -36,23 +38,32 @@ public class TestJuego21 {
 		jugador3.setNickname("Mishell");
 		juego.agregarJugador(jugador3);
 		
-		//Invocar a inicializar
-		juego.inicializar();
-		
-		//Invocar a repartirRonda()
-		juego.repartirRonda();
-		
-		//imprimir las cartas asignadas a cada jugador
-		System.out.println("=== CARTAS DE LOS JUGADORES ===");
-        jugador1.imprimir();
-        jugador2.imprimir();
-        jugador3.imprimir();
-        
-        
-        //Imprimir las cartas que quedan en el naipe
-        System.out.println("");
-        System.out.println("=== CARTAS QUE QUEDAN EN EL NAIPE ===");
-        juego.getDealer().imprimirNaipe();
+	
+	
+		//Ejecutar 10 partidas
+        for (int i = 1; i <= 10; i++) {
+
+            System.out.println("\n===== PARTIDA " + i + " =====");
+
+            juego.inicializar();
+
+            ArrayList<Jugador> ganadores = juego.jugar();
+
+            if (ganadores.isEmpty()) {
+                System.out.println("No hubo ganadores.");
+            } else {
+                System.out.println("Ganadores:");
+
+                for (Jugador ganador : ganadores) {
+                    System.out.println(ganador.getNickname() + " - Puntaje: " + ganador.getPuntajeCartas());
+                }
+            }
+
+            System.out.println("Puntajes finales:");
+            System.out.println(jugador1.getNickname() + ": " + jugador1.getPuntajeCartas());
+            System.out.println(jugador2.getNickname() + ": " + jugador2.getPuntajeCartas());
+            System.out.println(jugador3.getNickname() + ": " + jugador3.getPuntajeCartas());
+        }
 	}
 
 }

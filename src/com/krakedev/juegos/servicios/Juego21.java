@@ -56,6 +56,13 @@ public class Juego21 {
 
 	// metodo inicializar
 	public void inicializar() {
+		
+		// Reiniciar las cartas y el puntaje de cada jugador
+	    for (Jugador jugador : jugadores) {
+	        jugador.getCartas().clear();
+	        jugador.setPuntajeCartas(0);
+	    }
+	    
 		dealer = new Dealer();
 		cargarValores();
 	}
@@ -73,27 +80,26 @@ public class Juego21 {
 //	jugador
 //	• Pide una carta al Dealer (entregarCarta)
 //	• Se la entrega al jugador usando su método recibirCarta
-	
+
 	public void repartirCarta(Jugador jugador) {
 		Carta carta = dealer.entregarCarta();
-		jugador.recibirCarta(carta);		
+		jugador.recibirCarta(carta);
 	}
-	
+
 //	En Juego21:Método repartirRonda
 //	• Entrega una carta a cada jugador. Para esto debe barrerse el ArrayList de
 //	jugadores, en cada iteración invocar a repartirCarta y pasarle el jugador.
 //	• De esta forma le van a entregar una carta aleatoria a cada jugador
-	
-	//repartir ronda
-	
+
+	// repartir ronda
+
 	public void repartirRonda() {
-		for(Jugador jugador : jugadores) {
+		for (Jugador jugador : jugadores) {
 			repartirCarta(jugador);
 		}
-		 calcularTotal();
+		calcularTotal();
 	}
-	
-	
+
 //	En la clase Juego21, crear el método:
 //		calcularTotal(): Su objetivo es sumar los puntos de todas las cartas
 //		asignadas, por ejemplo si al jugador le tocó un A y una J su valor es
@@ -102,19 +108,51 @@ public class Juego21 {
 //		• Suma el valorJuego de todas las cartas de un jugador y acumula en una
 //		variable
 //		• Guarda el resultado en el atributo valorTotal del jugador
-	
-	
-	//calcular total
+
+	// calcular total
 	public void calcularTotal() {
 		for (Jugador jugador : jugadores) {
-	        int total = 0;
+			int total = 0;
 
-	        for (Carta carta : jugador.getCartas()) {
-	            total = total + carta.getValorJuego();
-	        }
+			for (Carta carta : jugador.getCartas()) {
+				total = total + carta.getValorJuego();
+			}
 
-	        jugador.setPuntajeCartas(total);
-	    }
+			jugador.setPuntajeCartas(total);
+		}
 	}
+
+	// validar ganador
+
+	public ArrayList<Jugador> validarGanador() {
+
+        ArrayList<Jugador> ganadores =
+                new ArrayList<Jugador>();
+
+        for (Jugador jugador : jugadores) {
+
+            if (jugador.getPuntajeCartas() == 21) {
+                ganadores.add(jugador);
+            }
+        }
+
+        return ganadores;
+    }
+
+	// jugar
+	public ArrayList<Jugador> jugar() {
+		ArrayList<Jugador> ganadores = new ArrayList<Jugador>();
+
+		for (int i = 0; i < 3; i++) {
+			repartirRonda();
+			ganadores = validarGanador();
+
+			if (!ganadores.isEmpty()) {
+				break;
+			}
+		}
+
+		return ganadores;
+	}	
 
 }
