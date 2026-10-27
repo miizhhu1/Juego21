@@ -90,7 +90,31 @@ public class Juego21 {
 		for(Jugador jugador : jugadores) {
 			repartirCarta(jugador);
 		}
+		 calcularTotal();
 	}
 	
+	
+//	En la clase Juego21, crear el método:
+//		calcularTotal(): Su objetivo es sumar los puntos de todas las cartas
+//		asignadas, por ejemplo si al jugador le tocó un A y una J su valor es
+//		de 21.
+//		Con un for, de cada jugador hace lo siguiente:
+//		• Suma el valorJuego de todas las cartas de un jugador y acumula en una
+//		variable
+//		• Guarda el resultado en el atributo valorTotal del jugador
+	
+	
+	//calcular total
+	public void calcularTotal() {
+		for (Jugador jugador : jugadores) {
+	        int total = 0;
+
+	        for (Carta carta : jugador.getCartas()) {
+	            total = total + carta.getValorJuego();
+	        }
+
+	        jugador.setPuntajeCartas(total);
+	    }
+	}
 
 }
