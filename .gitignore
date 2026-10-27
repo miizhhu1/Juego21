@@ -1,0 +1,12 @@
+
+# Carpetas de configuración de Eclipse
+.metadata/
+.settings/
+
+# Archivos de configuración de Eclipse
+.project
+.classpath
+
+# Archivos compilados de Java
+bin/
+*.class
